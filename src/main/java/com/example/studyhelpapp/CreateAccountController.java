@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -22,6 +23,9 @@ public class CreateAccountController {
     private TextField createPasswordTextField;
 
     @FXML
+    private Label invalidAccountLabel;
+
+    @FXML
     public void initialize(){
         setupEventHandlers();
     }
@@ -34,13 +38,16 @@ public class CreateAccountController {
             public void handle(ActionEvent e) {
                 String username = createUsernameTextField.getText();
                 String password = createPasswordTextField.getText();
-                if (username != null && !username.isEmpty() && password != null && !password.isEmpty()) {
+                if (username != null && !username.isEmpty() && password != null && !password.isEmpty() && !username.contains(" ")) {
                     try {
                         userManager.saveUser(username, password);
                         SceneLoader.swapScene("Home-Screen.fxml", "Create Account");
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
+                }
+                else{
+                    invalidAccountLabel.setText("Invalid Username/Password");
                 }
             }
         });
