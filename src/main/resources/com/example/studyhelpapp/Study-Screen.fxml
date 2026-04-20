@@ -20,13 +20,13 @@
             </ImageView>
          </graphic>
       </Button>
-      <ListView editable="true" layoutX="14.0" layoutY="26.0" prefHeight="334.0" prefWidth="132.0" />
-      <Button layoutX="332.0" layoutY="313.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" text="Flip" />
+      <ListView fx:id="studySetList" editable="true" layoutX="14.0" layoutY="26.0" prefHeight="334.0" prefWidth="132.0" />
+      <Button fx:id="flipButton" layoutX="332.0" layoutY="313.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" text="Flip" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e8e4aa" height="200.0" layoutX="219.0" layoutY="97.0" stroke="BLACK" strokeType="INSIDE" width="295.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" depthTest="ENABLE" layoutX="219.0" layoutY="97.0" prefHeight="200.0" prefWidth="295.0" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="444.0" layoutY="313.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" text="Next" />
-      <Button layoutX="219.0" layoutY="313.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" text="Back" />
-      <Button layoutX="45.0" layoutY="380.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="70.0" text="+" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="flashcardLabel" alignment="CENTER" contentDisplay="CENTER" depthTest="ENABLE" layoutX="219.0" layoutY="97.0" prefHeight="200.0" prefWidth="295.0" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="nextButton" layoutX="444.0" layoutY="313.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" text="Next" />
+      <Button fx:id="backButton" layoutX="219.0" layoutY="313.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="70.0" text="Back" />
+      <Button fx:id="addStudySetButton" layoutX="45.0" layoutY="380.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="70.0" text="+" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="19.0" />
          </font>

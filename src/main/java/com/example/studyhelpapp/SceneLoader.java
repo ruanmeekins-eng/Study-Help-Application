@@ -13,6 +13,7 @@ public class SceneLoader {
 
         FXMLLoader loader = new FXMLLoader(SceneLoader.class.getResource(sceneName));
         Parent root = loader.load();
+
         Scene newScene = new Scene(root, 600, 450);
 
         Stage stage = Main.getPrimaryStage();

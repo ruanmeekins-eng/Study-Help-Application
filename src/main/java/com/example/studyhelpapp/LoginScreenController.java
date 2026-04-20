@@ -9,6 +9,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginScreenController {
 
@@ -51,10 +52,16 @@ public class LoginScreenController {
             public void handle(ActionEvent e) {
                 String username = usernameTextField.getText();
                 String password = passwordTextField.getText();
+
+
                 if (username != null && !username.isEmpty() && password != null && !password.isEmpty() && userManager.login(username, password)){
                     try {
+
+                        User user = new User(username, password);
+                        Session.currentUser = user;
                         SceneLoader.swapScene("Home-Screen.fxml", "Home");
-                    } catch (IOException ex) {
+                    }
+                    catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
                 }

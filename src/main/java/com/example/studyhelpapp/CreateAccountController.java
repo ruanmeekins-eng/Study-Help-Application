@@ -40,7 +40,9 @@ public class CreateAccountController {
                 String password = createPasswordTextField.getText();
                 if (username != null && !username.isEmpty() && password != null && !password.isEmpty() && !username.contains(" ")) {
                     try {
+                        User user = new User(username, password);
                         userManager.saveUser(username, password);
+                        Session.currentUser = user;
                         SceneLoader.swapScene("Home-Screen.fxml", "Create Account");
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
