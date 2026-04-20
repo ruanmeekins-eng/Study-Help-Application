@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class FlashcardManager {
@@ -59,6 +60,16 @@ public class FlashcardManager {
         return list;
     }
 
+    public void saveAllFlashcards(String username, List<Flashcards> list) {
+        String filename = "users/" + username + ".txt";
 
+        try (FileWriter writer = new FileWriter(filename)) { // overwrite
+            for (Flashcards card : list) {
+                writer.write(card.getTerm() + "|" + card.getDefinition() + "\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

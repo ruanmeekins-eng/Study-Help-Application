@@ -16,4 +16,8 @@ public class Flashcards {
     public String getTerm(){return term;}
     public String getDefinition(){return definition;}
 
+    @Override
+    public String toString() {
+        return term; // only show the term in the list
+    }
 }
