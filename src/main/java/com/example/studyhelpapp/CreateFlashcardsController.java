@@ -23,6 +23,9 @@ public class CreateFlashcardsController {
     private Button saveChangesButton;
 
     @FXML
+    private Button saveStudySetButton;
+
+    @FXML
     private TextField termTextField;
 
     @FXML
@@ -32,27 +35,30 @@ public class CreateFlashcardsController {
     @FXML
     ListView<Flashcards> flashcardListView = new ListView<>();
 
-    FlashcardManager manager = new FlashcardManager();
+    private String username = Session.currentUser.getUsername();
 
-    ArrayList<Flashcards> flashcardList = manager.loadFlashcards(Session.currentUser.getUsername());
+    private FlashcardManager manager = new FlashcardManager();
+
+
 
     public void initialize(){
-        populateListView(flashcardList);
+
         setupEventHandlers();
         saveChangesButton.setVisible(false);
-        flashcardListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Flashcards>() {
-            @Override
-            public void changed(ObservableValue<? extends Flashcards> observable, Flashcards oldValue, Flashcards newValue) {
-                flashcardListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, selectedCard) -> {
-                    if (selectedCard != null) {
-                        saveChangesButton.setVisible(true);
-                        addButton.setVisible(false);
+        StudySet set = Session.currentStudySet;
 
-                        termTextField.setText(selectedCard.getTerm());
-                        definitionTextArea.setText(selectedCard.getDefinition());
-                    }
-                });
+        if (set != null) {
+            flashcardListView.getItems().addAll(set.getFlashcards());
+        }
+        flashcardListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, selectedCard) -> {
+            if (selectedCard != null) {
+                saveChangesButton.setVisible(true);
+                addButton.setVisible(false);
+
+                termTextField.setText(selectedCard.getTerm());
+                definitionTextArea.setText(selectedCard.getDefinition());
             }
+
         });
     }
 
@@ -73,22 +79,21 @@ public class CreateFlashcardsController {
 
             @Override
             public void handle(ActionEvent e) {
-                termTextField.setPromptText("Term:");
                 String term = termTextField.getText();
                 String definition = definitionTextArea.getText();
-
-                Flashcards newFlashcard = new Flashcards(term, definition);
+                Flashcards newFlashcard = new Flashcards(termTextField.getText(), definition);
 
                 if (!termExists(term) && !term.isEmpty()) {
-                    manager.saveFlashcard(Session.currentUser.getUsername(), term, definition);
-                    flashcardListView.getItems().add(newFlashcard);
 
-                }
-                else{
+                    Session.currentStudySet.getFlashcards().add(newFlashcard);
+
+                    flashcardListView.getItems().add(newFlashcard);
+                    termTextField.clear();
+                    definitionTextArea.clear();
+
+                } else {
                     termTextField.setPromptText("Term already exists!");
                 }
-                termTextField.setText("");
-                definitionTextArea.setText("");
             }
 
         });
@@ -105,22 +110,30 @@ public class CreateFlashcardsController {
                     flashcardListView.refresh(); // update UI
 
                     // Save to file (overwrite)
-                    manager.saveAllFlashcards(Session.currentUser.getUsername(), flashcardList);
+                    manager.saveStudySet(username, Session.currentStudySet);
                 }
-                manager.saveAllFlashcards(Session.currentUser.getUsername(), flashcardList);
+
                 saveChangesButton.setVisible(false);
                 addButton.setVisible(true);
-                termTextField.setText("");
-                definitionTextArea.setText("");
+                termTextField.clear();
+                definitionTextArea.clear();
+
             }
 
         });
+        saveStudySetButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                manager.saveStudySet(username, Session.currentStudySet);
+                try {
+                    SceneLoader.swapScene("Study-Screen.fxml", "Create Account");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
-    }
-    public void populateListView(ArrayList<Flashcards> flashcardList){
-        for (Flashcards flashcards : flashcardList){
-            flashcardListView.getItems().add(flashcards);
-        }
+
     }
 
 

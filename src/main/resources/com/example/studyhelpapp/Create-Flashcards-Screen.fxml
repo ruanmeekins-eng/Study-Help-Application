@@ -13,6 +13,7 @@
       <Button fx:id="addButton" layoutX="320.0" layoutY="285.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="142.0" text="Add" />
       <Button fx:id="saveChangesButton" layoutX="320.0" layoutY="285.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="142.0" text="Save Changes" />
       <Button fx:id="backButton" layoutX="530.0" layoutY="349.0" mnemonicParsing="false" text="Back" />
-      <ListView fx:id="flashcardListView" editable="true" layoutX="33.0" layoutY="33.0" prefHeight="334.0" prefWidth="132.0" />
+      <ListView fx:id="flashcardListView" editable="true" layoutX="35.0" layoutY="21.0" prefHeight="308.0" prefWidth="132.0" />
+      <Button fx:id="saveStudySetButton" layoutX="35.0" layoutY="337.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Save Study Set" />
    </children>
 </Pane>
