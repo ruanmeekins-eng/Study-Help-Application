@@ -1,3 +1,0 @@
-A|First letter
-B|Second letter
-C|Third letter

@@ -1,2 +1,0 @@
-Monopoly|Square game
-Battle Ship|Boats shoot each other
