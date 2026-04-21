@@ -2,6 +2,10 @@ package com.example.studyhelpapp;
 
 import java.util.ArrayList;
 
+/***
+ * Object that represents a user that contains
+ * a username and password.
+ */
 public class User {
     //Attributes
     private String username;

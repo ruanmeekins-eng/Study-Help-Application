@@ -4,45 +4,72 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
+/**
+ * Controller for the Study screen.
+ *
+ * Manages study set selection, flashcard navigation, and user interactions
+ * such as flipping cards, moving between cards, and creating/editing study sets.
+ *
+ */
 public class StudyController {
-
+    //Goes back to Home Screen
     @FXML
     private Button homeButton;
 
+    //Displays term or definition
     @FXML
     private Button flipButton;
 
+    //Moves forward through flashcard list
     @FXML
     private Button nextButton;
 
+    //Moves backward through flashcard list
     @FXML
     private Button backButton;
 
+    //Displays prompt to create a new study set name
     @FXML
     private Button newStudySetButton;
 
+    //Swaps to Create Flashcard Screen with selected study set
     @FXML
     private Button editStudySetButton;
 
+    //Label that displays the term and definition of flashcard
     @FXML
     private Label flashcardLabel;
 
+    //Creates the name for the study set from user input
     @FXML
     private TextField setNameTextField;
 
+    //List of users study sets
     @FXML
     private ListView<StudySet> studySetListView;
 
+    //Current user
     private String username = Session.currentUser.getUsername();
-    private FlashcardManager manager = new FlashcardManager();
-    private ArrayList<Flashcards> flashcards;
-    private int currentIndex = 0;
-    private boolean isTerm = false;
 
+    //Manger that gives access to saved flashcard information
+    private FlashcardManager manager = new FlashcardManager();
+
+    //List of flashcards within a study set
+    private ArrayList<Flashcards> flashcards;
+
+    //Index to keep track of position within flashcard list
+    private int currentIndex = 0;
+
+    //Determines if the flashcardLabel is displaying the term or definition
+    private boolean isNotTerm = false;
+
+
+    /**
+     * Initializes the controller after the FXML is loaded.
+     * Loads study sets for the current user and sets up event handlers.
+     */
     @FXML
     public void initialize() {
         setNameTextField.setVisible(false);
@@ -50,19 +77,20 @@ public class StudyController {
         if (Session.currentUser != null) {
             username = Session.currentUser.getUsername();
         }
-
         if (username != null) {
             ArrayList<StudySet> sets = manager.loadStudySets(username);
             studySetListView.getItems().clear();
             studySetListView.getItems().addAll(sets);
         }
-
         setupEventHandlers();
     }
-
+    /**
+     * Registers all UI event handlers including button actions,
+     * list selection behavior, and navigation between scenes.
+     */
     private void setupEventHandlers() {
 
-
+        //Handles going back to the Home Screen
         homeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -73,20 +101,26 @@ public class StudyController {
                 }
             }
         });
+
+        //Handles showing either the term or definition of the flashcard
         flipButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                if (flashcards == null || flashcards.isEmpty()) return;
-
-                if (isTerm) {
+                if (flashcards == null || flashcards.isEmpty()) return;//If no card exists, return empty
+                //Display term if currently displaying definition
+                if (isNotTerm) {
                     displayTerm();
-                    isTerm = false;
-                } else {
+                    isNotTerm = false;
+                }
+                //Displays definition if currently displaying term
+                else {
                     displayDefinition();
-                    isTerm = true;
+                    isNotTerm = true;
                 }
             }
         });
+
+        //Handles looping forward through list to display the next flashcard
         nextButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -94,10 +128,13 @@ public class StudyController {
                     return;
                 }
                 currentIndex++;
+                //Go back to the beginning of the list if the end is reached
                 if (currentIndex >= flashcards.size()) currentIndex = 0;
                 displayTerm();
             }
         });
+
+        //Handles looping backword through the list to display the previous flashcard
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -105,12 +142,13 @@ public class StudyController {
                     return;
                 }
                 currentIndex--;
+                //Go to the end of the list if beginning of the list is reached
                 if (currentIndex < 0) currentIndex = flashcards.size() - 1;
                 displayTerm();
             }
         });
 
-
+        //Handles getting the text field to input a new name
         newStudySetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -122,7 +160,7 @@ public class StudyController {
             }
         });
 
-
+        //Handles receiving a new name and switching to the Create Flashcard Screen
         setNameTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -132,8 +170,8 @@ public class StudyController {
                     return;
                 }
 
-                StudySet newSet = new StudySet(name);
-                Session.currentStudySet = newSet;
+                StudySet newSet = new StudySet(name);//Creates new instance of StudySet object
+                Session.currentStudySet = newSet;//Set the current study set being accessed to the newly created set
 
                 try {
                     SceneLoader.swapScene("Create-Flashcards-Screen.fxml", "New Set");
@@ -143,17 +181,17 @@ public class StudyController {
             }
         });
 
-
+        //Handles selecting a study set to edit and switching to Create Flashcards Screen
         editStudySetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
                 StudySet selectedSet = studySetListView.getSelectionModel().getSelectedItem();
-
+                //No set selected
                 if (selectedSet == null) {
                     return;
                 }
 
-                Session.currentStudySet = selectedSet;
+                Session.currentStudySet = selectedSet;//Set the selected set as the currently used set
 
                 try {
                     SceneLoader.swapScene("Create-Flashcards-Screen.fxml", "Edit Set");
@@ -163,13 +201,14 @@ public class StudyController {
             }
         });
 
-        // 🔹 Optional: Double-click ListView to edit
+       //Handles selecting a study set to edit by double-clicking. swaps to Create Flashcards Screen
         studySetListView.setOnMouseClicked(event -> {
+            //Double-click listener
             if (event.getClickCount() == 2) {
                 StudySet selectedSet = studySetListView.getSelectionModel().getSelectedItem();
 
                 if (selectedSet != null) {
-                    Session.currentStudySet = selectedSet;
+                    Session.currentStudySet = selectedSet;//Set the selected set as the currently used set
 
                     try {
                         SceneLoader.swapScene("Create-Flashcards-Screen.fxml", "Edit Set");
@@ -179,42 +218,46 @@ public class StudyController {
                 }
             }
         });
+
+        //Study set list view that handles displaying the flashcards of the selected set
         studySetListView.getSelectionModel().selectedItemProperty().addListener(
                 new javafx.beans.value.ChangeListener<StudySet>() {
                     @Override
-                    public void changed(javafx.beans.value.ObservableValue<? extends StudySet> obs,
-                                        StudySet oldVal,
-                                        StudySet selectedSet) {
+                    public void changed(javafx.beans.value.ObservableValue<? extends StudySet> obs, StudySet oldVal, StudySet selectedSet) {
 
                         if (selectedSet != null) {
-                            Session.currentStudySet = selectedSet;
-
-
-                            flashcards = selectedSet.getFlashcards();
+                            Session.currentStudySet = selectedSet; //Set the selected set as the currently used set
+                            flashcards = selectedSet.getFlashcards();//Gets the list of flashcards from the current study set
                             currentIndex = 0;
-
-                            displayTerm(); // update label
+                            displayTerm(); //Displays the first card
                         }
                     }
                 }
         );
     }
+
+    /**
+     * Displays the current flashcard's term in the label.
+     * If no flashcards exist, shows a default message.
+     */
     private void displayTerm() {
         if (flashcards == null || flashcards.isEmpty()) {
             flashcardLabel.setText("No flashcards available");
             return;
         }
-
         Flashcards card = flashcards.get(currentIndex);
         flashcardLabel.setText(card.getTerm());
     }
 
+    /**
+     * Displays the current flashcard's definition in the label.
+     * If no flashcards exist, shows a default message.
+     */
     private void displayDefinition() {
         if (flashcards == null || flashcards.isEmpty()) {
             flashcardLabel.setText("No flashcards available");
 
         } else {
-
             Flashcards card = flashcards.get(currentIndex);
             flashcardLabel.setText(card.getDefinition());
 

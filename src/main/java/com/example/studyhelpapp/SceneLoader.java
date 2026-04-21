@@ -7,6 +7,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/***
+ * Class that receives the name of the desired screen
+ * and the title. Switches screen to the desired scene.
+ */
 public class SceneLoader {
 
     public static void swapScene(String sceneName, String sceneTitle) throws IOException {
@@ -15,7 +19,6 @@ public class SceneLoader {
         Parent root = loader.load();
 
         Scene newScene = new Scene(root, 600, 450);
-
         Stage stage = Main.getPrimaryStage();
         stage.setScene(newScene);
         stage.setTitle(sceneTitle);
