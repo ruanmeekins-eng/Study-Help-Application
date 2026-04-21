@@ -46,7 +46,7 @@ public class StudyController {
     @FXML
     public void initialize() {
         setNameTextField.setVisible(false);
-        // SAFE initialization (avoid NPE)
+
         if (Session.currentUser != null) {
             username = Session.currentUser.getUsername();
         }
@@ -57,14 +57,12 @@ public class StudyController {
             studySetListView.getItems().addAll(sets);
         }
 
-
-
         setupEventHandlers();
     }
 
     private void setupEventHandlers() {
 
-        // 🔹 Home Button
+
         homeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -112,7 +110,7 @@ public class StudyController {
             }
         });
 
-        // 🔹 New Study Set Button
+
         newStudySetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -124,7 +122,7 @@ public class StudyController {
             }
         });
 
-        // 🔹 Press ENTER in TextField to create set
+
         setNameTextField.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -145,7 +143,7 @@ public class StudyController {
             }
         });
 
-        // 🔹 Edit Study Set Button
+
         editStudySetButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {

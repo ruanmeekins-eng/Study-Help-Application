@@ -68,7 +68,7 @@ public class CreateFlashcardsController {
             @Override
             public void handle(ActionEvent e) {
                 try {
-                    SceneLoader.swapScene("Study-Screen.fxml", "Create Account");
+                    SceneLoader.swapScene("Study-Screen.fxml", "Study");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -126,7 +126,7 @@ public class CreateFlashcardsController {
             public void handle(ActionEvent e) {
                 manager.saveStudySet(username, Session.currentStudySet);
                 try {
-                    SceneLoader.swapScene("Study-Screen.fxml", "Create Account");
+                    SceneLoader.swapScene("Study-Screen.fxml", "Study");
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
                 }
