@@ -55,7 +55,7 @@ public class CreateAccountController {
             @Override
             public void handle(ActionEvent e) {
 
-                String username = createUsernameTextField.getText();//Get the username
+                String username = createUsernameTextField.getText().toLowerCase();//Get the username
                 String password = createPasswordTextField.getText();//Get the password
 
                 //Checks that no username or password is empty or contains spaces
