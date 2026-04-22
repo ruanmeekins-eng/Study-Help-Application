@@ -25,7 +25,7 @@ public class UserManager {
         try (FileWriter writer = new FileWriter(FILE_NAME, true)) {
 
             //Store user in format: username,password
-            writer.write(username + "," + password + "\n");
+            writer.write(username.toLowerCase() + "," + password + "\n");
 
         } catch (IOException e) {
             e.printStackTrace();

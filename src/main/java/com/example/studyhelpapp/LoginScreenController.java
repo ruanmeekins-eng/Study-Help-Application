@@ -63,7 +63,7 @@ public class LoginScreenController {
         loginButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                String username = usernameTextField.getText();//Get username
+                String username = usernameTextField.getText().toLowerCase();//Get username
                 String password = passwordTextField.getText();//Get password
 
                 //Validates that username/password exists and that they are valid in syntax

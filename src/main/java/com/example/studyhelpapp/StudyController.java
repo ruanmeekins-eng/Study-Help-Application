@@ -42,6 +42,9 @@ public class StudyController {
     @FXML
     private Label flashcardLabel;
 
+    @FXML
+    private Label nameLabel;
+
     //Creates the name for the study set from user input
     @FXML
     private TextField setNameTextField;
@@ -73,6 +76,7 @@ public class StudyController {
     @FXML
     public void initialize() {
         setNameTextField.setVisible(false);
+        nameLabel.setVisible(false);
 
         if (Session.currentUser != null) {
             username = Session.currentUser.getUsername();
@@ -153,6 +157,7 @@ public class StudyController {
             @Override
             public void handle(ActionEvent e) {
                 setNameTextField.setVisible(true);
+                nameLabel.setVisible(true);
                 setNameTextField.requestFocus();
 
                 newStudySetButton.setVisible(false);

@@ -37,7 +37,8 @@
             <Font size="11.0" />
          </font>
       </Button>
-      <TextField fx:id="setNameTextField" layoutX="26.0" layoutY="388.0" promptText="Study set name:" />
+      <TextField fx:id="setNameTextField" layoutX="26.0" layoutY="393.0" promptText="Study set name:" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="25.0" prefHeight="17.0" prefWidth="155.0" text="Study Sets" />
+      <Label fx:id="nameLabel" alignment="CENTER" layoutX="24.0" layoutY="372.0" prefHeight="17.0" prefWidth="149.0" text="Name" />
    </children>
 </Pane>
