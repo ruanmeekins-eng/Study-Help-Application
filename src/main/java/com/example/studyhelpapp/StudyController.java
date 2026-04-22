@@ -125,6 +125,7 @@ public class StudyController {
         });
 
         //Handles looping forward through list to display the next flashcard
+        // Also resets the flip state so each new card starts by displaying the term.
         nextButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -134,11 +135,15 @@ public class StudyController {
                 currentIndex++;
                 //Go back to the beginning of the list if the end is reached
                 if (currentIndex >= flashcards.size()) currentIndex = 0;
+
+                // Reset flip state so new card always shows the term first
+                isNotTerm = false;
                 displayTerm();
             }
         });
 
         //Handles looping backword through the list to display the previous flashcard
+        // Resets the flip state so the card always displays the term first
         backButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -148,6 +153,9 @@ public class StudyController {
                 currentIndex--;
                 //Go to the end of the list if beginning of the list is reached
                 if (currentIndex < 0) currentIndex = flashcards.size() - 1;
+
+                // Reset flip state when switching cards
+                isNotTerm = false;
                 displayTerm();
             }
         });
@@ -234,6 +242,9 @@ public class StudyController {
                             Session.currentStudySet = selectedSet; //Set the selected set as the currently used set
                             flashcards = selectedSet.getFlashcards();//Gets the list of flashcards from the current study set
                             currentIndex = 0;
+
+                            // Reset flip state when switching sets
+                            isNotTerm = false;
                             displayTerm(); //Displays the first card
                         }
                     }
