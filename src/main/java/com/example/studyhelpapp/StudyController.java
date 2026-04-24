@@ -38,6 +38,10 @@ public class StudyController {
     @FXML
     private Button editStudySetButton;
 
+    // Opens the mix-match game screen
+    @FXML
+    private Button startGameButton;
+
     //Label that displays the term and definition of flashcard
     @FXML
     private Label flashcardLabel;
@@ -250,6 +254,27 @@ public class StudyController {
                     }
                 }
         );
+
+        // Handles opening the Mix & Match game screen
+        startGameButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+
+                // Ensures a study set is selected
+                if (Session.currentStudySet == null) {
+                    flashcardLabel.setText("Please select a study set first.");
+                    return;
+                }
+
+                try {
+                    SceneLoader.swapScene("Game-Screen.fxml", "Mix & Match Flashcards");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
+        }
     }
 
     /**
