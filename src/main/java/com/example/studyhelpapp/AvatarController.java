@@ -26,6 +26,15 @@ public class AvatarController {
     private boolean brownHairEquipped = false;
 
     @FXML
+    private ImageView GlassesEquip;
+
+    @FXML
+    private Button GlassesButton;
+
+    private boolean glassesOwned = false;
+    private boolean glassesEquipped = false;
+
+    @FXML
     public void initialize() {
         setupEventHandlers();
 
@@ -47,6 +56,7 @@ public class AvatarController {
         });
     }
 
+    // Brown Hair item
     @FXML
     public void handleBrownHairButton() {
 
@@ -80,6 +90,39 @@ public class AvatarController {
                 brownHairEquipped = true;
                 BrownGirlHairEquip.setVisible(true);
                 buyButton.setText("Unequip");
+            }
+        }
+    }
+
+    // glasses item
+    @FXML
+    public void handleGlassesButton() {
+
+        if (!glassesOwned) {
+            Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+            confirm.setTitle("Confirm Purchase");
+            confirm.setHeaderText("Buy Glasses?");
+            confirm.setContentText("Are you sure you want to buy this item?");
+
+            Optional<ButtonType> result = confirm.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                glassesOwned = true;
+                glassesEquipped = true;
+
+                GlassesEquip.setVisible(true);
+                GlassesButton.setText("Unequip");
+            }
+
+        } else {
+            if (glassesEquipped) {
+                glassesEquipped = false;
+                GlassesEquip.setVisible(false);
+                GlassesButton.setText("Equip");
+            } else {
+                glassesEquipped = true;
+                GlassesEquip.setVisible(true);
+                GlassesButton.setText("Unequip");
             }
         }
     }
