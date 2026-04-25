@@ -9,4 +9,5 @@ package com.example.studyhelpapp;
 public class Session {
     public static User currentUser; //User that is currently logged-in
     public static StudySet currentStudySet; //Current study set being used
+
 }
