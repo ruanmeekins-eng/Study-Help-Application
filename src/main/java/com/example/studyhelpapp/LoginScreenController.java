@@ -65,11 +65,11 @@ public class LoginScreenController {
             public void handle(ActionEvent e) {
                 String username = usernameTextField.getText().toLowerCase();//Get username
                 String password = passwordTextField.getText();//Get password
-
+                User currentUser = userManager.login(username, password);
                 //Validates that username/password exists and that they are valid in syntax
-                if (username != null && !username.isEmpty() && password != null && !password.isEmpty() && userManager.login(username, password)){
+                if (!username.isEmpty() && password != null && !password.isEmpty() && currentUser != null){
                     try {
-                        Session.currentUser = new User(username, password);//Set the current user to a new instance of the User class
+                        Session.currentUser = currentUser;//Set the current user to a new instance of the User class
                         SceneLoader.swapScene("Home-Screen.fxml", "Home");
                     }
                     catch (IOException ex) {

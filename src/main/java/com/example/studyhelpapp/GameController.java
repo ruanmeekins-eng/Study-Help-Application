@@ -134,9 +134,12 @@ public class GameController {
     /**
      * Checks if the selected definition matches the current term.
      */
+    UserManager userManager = new UserManager();
     private void checkAnswer(String selectedDefinition) {
         if (selectedDefinition.equals(currentCard.getDefinition())) {
             feedbackLabel.setText("Correct!");
+            Session.currentUser.setPoint(Session.currentUser.getPoint() + 10);
+            userManager.updateUser(Session.currentUser.getUsername(), Session.currentUser.getPassword(), Session.currentUser.getPoint());
             currentIndex++;
             showQuestion();
         } else {
