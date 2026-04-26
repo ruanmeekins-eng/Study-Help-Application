@@ -275,8 +275,8 @@ public class StudyController {
             }
         });
 
+    }
 
-        }
     /**
      * Displays the current flashcard's term in the label.
      * If no flashcards exist, shows a default message.
@@ -305,9 +305,3 @@ public class StudyController {
         }
     }
 }
-
-
-
-
-
-
