@@ -125,7 +125,11 @@ public class AvatarController {
 
                 boolean equipped = equippedItems.getOrDefault(item, false);
 
-                btn.setText(equipped ? "Unequip" : "Equip");//Ternary operator (shorter if else)
+                if (equipped) {
+                    btn.setText("Unequip");
+                } else {
+                    btn.setText("Equip");
+                }
                 img.setVisible(equipped);
 
             } else {
