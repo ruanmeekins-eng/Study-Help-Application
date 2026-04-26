@@ -28,6 +28,9 @@ public class GameController {
     private Label feedbackLabel;
 
     @FXML
+    private Label pointLabel;
+
+    @FXML
     private Label progressLabel;
 
     @FXML
@@ -50,6 +53,7 @@ public class GameController {
     public void initialize(){
         setupEventHandlers();
         loadGame();
+        pointLabel.setText("Points: " + Session.currentUser.getPoint());
     }
 
     @FXML
@@ -134,9 +138,13 @@ public class GameController {
     /**
      * Checks if the selected definition matches the current term.
      */
+    UserManager userManager = new UserManager();
     private void checkAnswer(String selectedDefinition) {
         if (selectedDefinition.equals(currentCard.getDefinition())) {
             feedbackLabel.setText("Correct!");
+            Session.currentUser.setPoint(Session.currentUser.getPoint() + 10);
+            pointLabel.setText("Points: " + Session.currentUser.getPoint());
+            userManager.updateUser(Session.currentUser.getUsername(), Session.currentUser.getPassword(), Session.currentUser.getPoint());
             currentIndex++;
             showQuestion();
         } else {

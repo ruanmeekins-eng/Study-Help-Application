@@ -59,10 +59,10 @@ public class CreateAccountController {
                 String password = createPasswordTextField.getText();//Get the password
 
                 //Checks that no username or password is empty or contains spaces
-                if (username != null && !username.isEmpty() && password != null && !password.isEmpty() && !username.contains(" ") && !userManager.login(username, password)) {
+                if (!username.isEmpty() && password != null && !password.isEmpty() && !username.contains(" ") && userManager.login(username, password) == null) {
                     try {
-                        User user = new User(username, password);//Create new instance of user from the data
-                        userManager.saveUser(username, password);//Saves the user information to respected directory
+                        User user = new User(username, password, 0);//Create new instance of user from the data
+                        userManager.saveUser(username, password, 0);//Saves the user information to respected directory
                         Session.currentUser = user;//Sets the current user to this instance of user
                         SceneLoader.swapScene("Home-Screen.fxml", "Create Account");
 
@@ -70,7 +70,7 @@ public class CreateAccountController {
                         throw new RuntimeException(ex);
                     }
                 }
-                else if (userManager.login(username, password)){
+                else if (userManager.login(username, password) != null){
                     invalidAccountLabel.setText("Username is taken!");
                 }
                 else{
