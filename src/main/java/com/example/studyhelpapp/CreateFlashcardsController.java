@@ -22,6 +22,10 @@ public class CreateFlashcardsController {
     @FXML
     private Button addButton;
 
+    // Displays Error message
+    @FXML
+    private Label errorLabel;
+
     //Saves changes to selected flashcard
     @FXML
     private Button saveChangesButton;
@@ -96,20 +100,31 @@ public class CreateFlashcardsController {
         addButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
-                String term = termTextField.getText();
-                String definition = definitionTextArea.getText();
-                Flashcards newFlashcard = new Flashcards(termTextField.getText(), definition); //Create a new flashcard
+                String term = termTextField.getText().trim();
+                String definition = definitionTextArea.getText().trim();
 
                 //Adds flashcard to study set and the flashcard list
                 //view if it doesn't exist already
-                if (!termExists(term) && !term.isEmpty()) {
+                //prevents empty term and definition
+                //adss flashcard only if all condiiton spass
+                if (term.isEmpty()) {
+                    errorLabel.setText("Term cannot be empty!");
+                }
+                else if (definition.isEmpty()) {
+                    errorLabel.setText("Definition cannot be empty!");
+                }
+                else if (termExists(term)) {
+                    errorLabel.setText("Term already exists!");
+                }
+                else {
+                    Flashcards newFlashcard = new Flashcards(term, definition);
+
                     Session.currentStudySet.getFlashcards().add(newFlashcard);
                     flashcardListView.getItems().add(newFlashcard);
+
                     termTextField.clear();
                     definitionTextArea.clear();
-
-                } else {//Term already exists
-                    termTextField.setPromptText("Term already exists!");
+                    errorLabel.setText("");
                 }
             }
         });

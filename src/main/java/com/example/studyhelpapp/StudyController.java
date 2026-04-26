@@ -92,6 +92,7 @@ public class StudyController {
         }
         setupEventHandlers();
     }
+
     /**
      * Registers all UI event handlers including button actions,
      * list selection behavior, and navigation between scenes.
@@ -218,7 +219,7 @@ public class StudyController {
             }
         });
 
-       //Handles selecting a study set to edit by double-clicking. swaps to Create Flashcards Screen
+        //Handles selecting a study set to edit by double-clicking. swaps to Create Flashcards Screen
         studySetListView.setOnMouseClicked(event -> {
             //Double-click listener
             if (event.getClickCount() == 2) {
@@ -274,7 +275,6 @@ public class StudyController {
             }
         });
 
-        }
     }
 
     /**
@@ -304,6 +304,4 @@ public class StudyController {
 
         }
     }
-
-
 }
