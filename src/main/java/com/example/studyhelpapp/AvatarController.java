@@ -8,8 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.*;
 
 public class AvatarController {
 
@@ -34,12 +36,29 @@ public class AvatarController {
     private boolean glassesOwned = false;
     private boolean glassesEquipped = false;
 
+    Hashtable<String, Boolean> shopItems = new Hashtable<>();
+
+
     @FXML
     public void initialize() {
         setupEventHandlers();
-
-        BrownGirlHairEquip.setVisible(false);
-        buyButton.setText("Buy");
+        shopItems.put("brownHair", false);
+        shopItems.put("glasses", false);
+        getOwnedItems();
+        if (shopItems.get("brownHair") == true){
+            brownHairOwned = true;
+            buyButton.setText("Equip");
+        }
+        else{
+            buyButton.setText("Buy");
+        }
+        if (shopItems.get("glasses") == true){
+            glassesOwned = true;
+            GlassesButton.setText("Equip");
+        }
+        else{
+            GlassesButton.setText("Buy");
+        }
     }
 
     @FXML
@@ -55,7 +74,7 @@ public class AvatarController {
             }
         });
     }
-
+    AvatarManager avatarManager = new AvatarManager();
     // Brown Hair item
     @FXML
     public void handleBrownHairButton() {
@@ -69,8 +88,8 @@ public class AvatarController {
             Optional<ButtonType> result = confirm.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                brownHairOwned = true;
-                brownHairEquipped = true;
+                avatarManager.saveAvatar(Session.currentUser.getUsername(), "brownHair");
+                getOwnedItems();
 
                 BrownGirlHairEquip.setVisible(true);
                 buyButton.setText("Unequip");
@@ -97,7 +116,7 @@ public class AvatarController {
     // glasses item
     @FXML
     public void handleGlassesButton() {
-
+        
         if (!glassesOwned) {
             Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
             confirm.setTitle("Confirm Purchase");
@@ -107,6 +126,7 @@ public class AvatarController {
             Optional<ButtonType> result = confirm.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                avatarManager.saveAvatar(Session.currentUser.getUsername(), "glasses");
                 glassesOwned = true;
                 glassesEquipped = true;
 
@@ -124,6 +144,20 @@ public class AvatarController {
                 GlassesEquip.setVisible(true);
                 GlassesButton.setText("Unequip");
             }
+        }
+    }
+
+    public void getOwnedItems(){
+        String username = Session.currentUser.getUsername();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("users/" + username + "/" + username + "Avatar.txt"))) {
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                shopItems.put(line, true);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

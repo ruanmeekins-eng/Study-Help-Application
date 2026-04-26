@@ -123,9 +123,12 @@ public class CreateFlashcardsController {
                 Flashcards selectedCard = flashcardListView.getSelectionModel().getSelectedItem();
 
                 if (selectedCard != null) {
+
                     selectedCard.setTerm(termTextField.getText());
                     selectedCard.setDefinition(definitionTextArea.getText());
-
+                    if (selectedCard.getTerm() == null && selectedCard.getDefinition() == null){
+                        Session.currentStudySet.getFlashcards().remove(selectedCard);
+                    }
                     flashcardListView.refresh(); //Update the list
 
                     //Save to file
