@@ -13,7 +13,7 @@
       <TextArea fx:id="definitionTextArea" layoutX="226.0" layoutY="114.0" prefHeight="129.0" prefWidth="330.0" promptText="Definition" wrapText="true" />
       <Label fx:id="errorLabel" layoutX="226.0" layoutY="246.0" prefWidth="330.0" text="" textFill="red" />
       <Button fx:id="addButton" layoutX="312.0" layoutY="270.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="142.0" text="Add" />
-      <Button fx:id="saveChangesButton" layoutX="312.0" layoutY="258.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="142.0" text="Save Changes" />
+      <Button fx:id="saveChangesButton" layoutX="312.0" layoutY="270.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="142.0" text="Save Changes" />
       <Button fx:id="backButton" layoutX="545.0" layoutY="362.0" mnemonicParsing="false" text="Back" />
       <ListView fx:id="flashcardListView" editable="true" layoutX="24.0" layoutY="43.0" prefHeight="291.0" prefWidth="155.0" />
       <Button fx:id="saveStudySetButton" layoutX="36.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="132.0" text="Save Study Set" />

@@ -302,8 +302,6 @@ public class StudyController {
 
         }
     }
-    }
-
-    
+}
 
 
