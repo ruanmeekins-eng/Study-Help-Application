@@ -1,6 +1,5 @@
 package com.example.studyhelpapp;
 
-import java.util.ArrayList;
 
 /***
  * Object that represents a user that contains

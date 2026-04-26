@@ -17,9 +17,6 @@ public class HomeScreenController {
     private Button studyButton;
 
     @FXML
-    private Button gameButton;
-
-    @FXML
     private Button avatarButton;
 
     @FXML
@@ -42,16 +39,7 @@ public class HomeScreenController {
                 }
             }
         });
-        gameButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                try {
-                    SceneLoader.swapScene("Game-Screen.fxml", "Game");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-        });
+
         avatarButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -72,7 +60,5 @@ public class HomeScreenController {
                 }
             }
         });
-
-
     }
 }

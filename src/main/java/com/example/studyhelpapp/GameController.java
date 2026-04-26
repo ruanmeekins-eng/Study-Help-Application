@@ -53,7 +53,7 @@ public class GameController {
     public void initialize(){
         setupEventHandlers();
         loadGame();
-        pointLabel.setText("Points:" + Session.currentUser.getPoint());
+        pointLabel.setText("Points :" + Session.currentUser.getPoint());
     }
 
     @FXML

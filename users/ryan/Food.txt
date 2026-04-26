@@ -1,4 +1,0 @@
-Taco|Mexican
-Pasta|Italian
-Burgers|Amewrican
-pork|sdfa
